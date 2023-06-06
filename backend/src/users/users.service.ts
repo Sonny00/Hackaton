@@ -20,6 +20,22 @@ export class UsersService {
     return createdUser;
   }
 
+  async findOne(id: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  async findOneByEmail(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
+
   async findUserById(id: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: { id },

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { jwtConstants } from '../jwt-constants';
+import { jwtConstants } from './jwt-constants';
 import { sign, verify } from 'jsonwebtoken';
 
 @Injectable()
