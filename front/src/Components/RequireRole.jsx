@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { useUser } from "../contexts/UserProvider";
-import { Role } from "../constants";
+import { useUser } from "../Contexts/UserProvider";
+import { Role } from "../Constants";
 
 function RequireRole(role, children) {
     const { user } = useUser();
