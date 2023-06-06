@@ -21,11 +21,13 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
+  // TODO: Add authorization
   async getUsers(): Promise<User[]> {
     return this.userService.getUsers();
   }
 
   @Get(':id')
+  // TODO: Add authorization
   async getUserById(@Param('id') id: string): Promise<User | null> {
     return this.userService.findUserById(id);
   }
@@ -38,6 +40,7 @@ export class UsersController {
   }
 
   @Put(':id')
+  // TODO: Add authorization
   async updateUser(
     @Param('id') id: string,
     @Body() user: User,
@@ -46,6 +49,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  // TODO: Add authorization
   async deleteUser(@Param('id') id: string): Promise<void> {
     await this.userService.deleteUser(id);
   }
