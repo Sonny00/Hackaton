@@ -1,0 +1,55 @@
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
+import { UnauthorizedException } from '@nestjs/common';
+import { LoginDto } from './loginDto/loginDto';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
+
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.usersService.findOneByEmail(email);
+    if (user) {
+      console.log(password);
+      console.log(user.password);
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      console.log("password", passwordMatch)
+      if (passwordMatch) {
+        const { password, ...result } = user;
+        return result;
+      } else {
+        throw new UnauthorizedException(
+          'Les informations de connexion sont incorrectes',
+        );
+      }
+    }
+    return null;
+  }
+
+  async login(user: LoginDto) {
+    const validatedUser = await this.validateUser(user.email, user.password);
+
+    if (validatedUser) {
+      const payload = { sub: validatedUser.id };
+      return {
+        access_token: this.jwtService.sign(payload),
+      };
+    } else {
+      throw new UnauthorizedException(
+        'Les informations de connexion sont incorrectes',
+      );
+    }
+  }
+  async validateToken(token: string): Promise<any> {
+    try {
+      return this.jwtService.verify(token);
+    } catch (e) {
+      return null;
+    }
+  }
+}
