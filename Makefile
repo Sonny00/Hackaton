@@ -6,6 +6,14 @@ up:
 down:
 	docker-compose down
 
+# commandes Back
+back-install:
+	docker-compose exec nestjs npm install
+back-start:
+	docker-compose exec nestjs npm run start:dev
+back-shell:
+	docker-compose exec -it nestjs /bin/sh
+
 # commandes Front
 front-install:
 	docker-compose exec react npm install
