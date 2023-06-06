@@ -2,12 +2,8 @@ version: '3.8'
 
 services:
   nestjs:
-    image: node:19.0.0-alpine
-    working_dir: /app 
-    tty: true
-    stdin_open: true
-    volumes:
-      - ./backend:/app
+    build:
+      context: ./backend
     container_name: nestjs
     ports:
       - 3000:3000
@@ -21,6 +17,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    volumes:
+      - ./backend:/app
 
   react:
     image: node:19.0.0-alpine
