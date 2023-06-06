@@ -1,6 +1,5 @@
-import { IsDefined, IsEmail, IsNotEmpty } from 'class-validator';
-import * as bcrypt from 'bcrypt';
 import { Role } from '@prisma/client';
+import { IsDefined, IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
   @IsEmail()
