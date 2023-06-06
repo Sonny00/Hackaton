@@ -1,22 +1,20 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   Put,
-  Delete,
-  Body,
-  Param,
-  ValidationPipe,
   UseGuards,
-  SetMetadata,
+  ValidationPipe,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './userDto/users.dto';
-import { User } from '@prisma/client';
-import { RolesGuard } from 'src/roles.guard';
-import { UserRole } from './userRole.enum';
-import { Roles } from 'src/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from '@prisma/client';
+import { Roles } from 'src/roles.decorator';
+import { RolesGuard } from 'src/roles.guard';
+import { CreateUserDto } from './userDto/users.dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
