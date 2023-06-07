@@ -12,26 +12,28 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  email     String  @unique
+  id        String   @id @default(uuid())
+  email     String   @unique
   password  String?
-  role      Role @default(USER)
+  role      Role     @default(USER)
   firstname String
   lastname  String
-  skills    Skill[]
+  skills    Skills[]
   jobTitle  String
-  team      Team? @relation(fields: [teamId], references: [id])
+  team      Teams?   @relation(fields: [teamId], references: [id])
   teamId    String?
 }
 
-model Skill {
-  id      String  @id @default(uuid())
-  user    User @relation(fields: [userId], references: [id])
-  userId  String
+model Skills {
+  id     String    @id @default(uuid())
+  user   User      @relation(fields: [userId], references: [id])
+  userId String
+  name   String
+  type   SkillType
 }
 
-model Team {
-  id        String  @id @default(uuid())
+model Teams {
+  id        String   @id @default(uuid())
   teamName  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,4 +43,10 @@ model Team {
 enum Role {
   ADMIN
   USER
+}
+
+enum SkillType {
+  BACK
+  FRONT
+  INFRA
 }

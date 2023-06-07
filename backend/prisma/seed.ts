@@ -12,13 +12,12 @@ async function main() {
     });
 
     if (existingUser) {
-      console.log('User already exists.');
       return;
     }
 
     const password = 'adminpassword';
     const hashedPassword =
-      '$2y$10$n3znieqptUX.ocWt22zZFO.Qg6DmGqgj1Lg2trt5dLayP9eadGJKW'; // Mot de passe : password
+      '$2a$12$77NK1cuwhri3H.PV6g8IEu8JC18DTkZyssmKIEBFM5jg1pP8/7xqm'; // Mot de passe : password
 
     const admin = await prisma.user.create({
       data: {
@@ -50,6 +49,5 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('Error during seed:', error);
   process.exit(1);
 });
