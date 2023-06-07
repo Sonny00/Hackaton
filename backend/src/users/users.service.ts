@@ -2,22 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './userDto/users.dto';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(data: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    console.log(hashedPassword)
     const userData = this.prisma.user.create({
       data: {
         ...data,
         password: hashedPassword,
-        role: data.role
-      }
-    })
+        role: data.role,
+      },
+    });
     return userData;
   }
 

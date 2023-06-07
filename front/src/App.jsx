@@ -5,7 +5,23 @@ import {
     Routes,
 } from "react-router-dom";
 import { createUseStyles } from "react-jss";
-import { UserProvider } from "./contexts/UserProvider";
+import { UserProvider } from "./Contexts/UserProvider";
+import Dashboard from "./Views/Dashboard";
+
+function App() {
+    useColors();
+    return (
+        <UserProvider>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<div>page d'acceuil</div>} />
+                    <Route path="/me" element={<Dashboard />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            </Router>
+        </UserProvider>
+    );
+}
 
 const useColors = createUseStyles({
     "@global": {
@@ -18,20 +34,5 @@ const useColors = createUseStyles({
         },
     },
 });
-
-function App() {
-    useColors();
-    
-    return (
-        <UserProvider>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<div>page d'acceuil</div>} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-            </Router>
-        </UserProvider>
-    );
-}
 
 export default App;

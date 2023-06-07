@@ -13,6 +13,10 @@ back-start:
 	docker-compose exec nestjs npm run start:dev
 back-shell:
 	docker-compose exec -it nestjs /bin/sh
+prisma-client:
+	docker-compose exec -it nestjs npx prisma generate
+prisma-db:
+	docker-compose exec -it nestjs npx prisma db push
 
 # commandes Front
 front-install:

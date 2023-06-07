@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import UserStorage from "../Services/UserStorage";
 
 const context = createContext({
     user: null,
@@ -13,14 +14,14 @@ const context = createContext({
 const useUser = () => useContext(context);
 
 function UserProvider({ children }) {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => UserStorage.load());
 
     function login() {
         setUser({});
     }
 
     function logout() {
-        setUser(null);
+        UserStorage.clear();
     }
 
     return (
