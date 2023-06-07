@@ -18,23 +18,24 @@ model User {
   role      Role @default(USER)
   firstname String
   lastname  String
-  skills    Skill[]
+  skills    Skills[]
   jobTitle  String
-  team      Team? @relation(fields: [teamId], references: [id])
+  team      Teams? @relation(fields: [teamId], references: [id])
   teamId    String?
 }
 
-model Skill {
+model Skills {
   id      String  @id @default(uuid())
   user    User @relation(fields: [userId], references: [id])
   userId  String
 }
 
-model Team {
+model Teams {
   id        String  @id @default(uuid())
-  teamName  String
+  teamName  String  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  date      DateTime
   members   User[]
 }
 
