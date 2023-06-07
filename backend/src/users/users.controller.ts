@@ -7,16 +7,21 @@ import {
   Post,
   Put,
   UseGuards,
+  SetMetadata,
+  UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import { Roles } from 'src/roles.decorator';
+import { AuthGuard } from '@nestjs/passport';
+import { UsersInterceptor } from 'src/interceptors/users.interceptor';
 import { RolesGuard } from 'src/roles.guard';
 import { CreateUserDto } from './userDto/users.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
+@UseInterceptors(UsersInterceptor)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
