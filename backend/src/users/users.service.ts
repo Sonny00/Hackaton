@@ -15,6 +15,11 @@ export class UsersService {
         ...data,
         password: hashedPassword,
         role: data.role,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        jobTitle: data.jobTitle,
+        team: undefined,
+        skills: undefined
       },
     });
     return userData;

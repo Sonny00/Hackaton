@@ -14,7 +14,6 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import { Roles } from 'src/roles.decorator';
-import { AuthGuard } from '@nestjs/passport';
 import { UsersInterceptor } from 'src/interceptors/users.interceptor';
 import { RolesGuard } from 'src/roles.guard';
 import { CreateUserDto } from './userDto/users.dto';
@@ -26,7 +25,8 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  // TODO: Add authorization
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('ADMIN')
   async getUsers(): Promise<User[]> {
     return this.userService.getUsers();
   }
