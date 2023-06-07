@@ -4,6 +4,7 @@ import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './loginDto/loginDto';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -12,16 +13,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.usersService.findOneByEmail(email);
     if (user) {
-      console.log(password);
-      console.log(user.password);
       const passwordMatch = await bcrypt.compare(password, user.password);
-      console.log("password", passwordMatch)
       if (passwordMatch) {
-        const { password, ...result } = user;
-        return result;
+        return user;
       } else {
         throw new UnauthorizedException(
           'Les informations de connexion sont incorrectes',
