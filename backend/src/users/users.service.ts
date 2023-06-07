@@ -19,7 +19,7 @@ export class UsersService {
         lastname: data.lastname,
         jobTitle: data.jobTitle,
         team: undefined,
-        skills: undefined
+        skills: undefined,
       },
     });
     return userData;
