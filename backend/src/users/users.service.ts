@@ -49,7 +49,12 @@ export class UsersService {
   }
 
   async getUsers(): Promise<User[]> {
-    const users = await this.prisma.user.findMany();
+    const users = await this.prisma.user.findMany({
+      include: {
+        team: true,
+        skills: true,
+      },
+    });
     return users;
   }
 
