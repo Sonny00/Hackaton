@@ -17,6 +17,8 @@ prisma-client:
 	docker-compose exec -it nestjs npx prisma generate
 prisma-db:
 	docker-compose exec -it nestjs npx prisma db push
+prisma-seed:
+	docker-compose exec -it nestjs npx prisma db seed
 
 # commandes Front
 front-install:
@@ -25,3 +27,4 @@ front-start:
 	docker-compose exec react npm start
 front-shell:
 	docker-compose exec -it react /bin/sh
+
