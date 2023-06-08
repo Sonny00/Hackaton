@@ -16,8 +16,9 @@ const useUser = () => useContext(context);
 function UserProvider({ children }) {
     const [user, setUser] = useState(() => UserStorage.load());
 
-    function login() {
-        setUser({});
+    function login(user) {
+        setUser(user);
+        UserStorage.store(user);
     }
 
     function logout() {

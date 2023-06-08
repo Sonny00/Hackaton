@@ -34,6 +34,7 @@ export class AuthService {
     if (validatedUser) {
       const payload = { sub: validatedUser.id };
       return {
+        id: validatedUser.id,
         access_token: this.jwtService.sign(payload),
       };
     } else {
