@@ -8,11 +8,11 @@ export class TeamsService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateTeamDto): Promise<Teams> {
-    console.log(new Date(data.date));
     const teamData = this.prisma.teams.create({
       data: {
         ...data,
-        teamName: data.teamName
+        teamName: data.teamName,
+        date: new Date(data.date)
       },
     });
     return teamData;
