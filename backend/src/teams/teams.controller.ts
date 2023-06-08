@@ -5,20 +5,22 @@ import { RolesGuard } from 'src/roles.guard';
 import { Roles } from 'src/roles.decorator';
 import { Teams } from '@prisma/client';
 import { CreateTeamDto, UpdateTeamDto } from './teamsDto/teams.dto';
+import { OwnerOrAdminGuard } from 'src/owner-or-admin.guard';
+import { UserRole } from 'src/users/userRole.enum';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('teams')
+@UseGuards(AuthGuard('jwt'), RolesGuard, OwnerOrAdminGuard)
 export class TeamsController {
     constructor(private readonly teamsService: TeamsService) {}
 
     @Get()
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles('ADMIN')
+    @Roles(UserRole.ADMIN)
     async getTeam(): Promise<Teams[]> {
       return this.teamsService.getTeams();
     }
   
     @Get(':id')
+    @Roles('ADMIN')
     // TODO: Add authorization
     async geTeamById(@Param('id') id: string): Promise<Teams | null> {
       return this.teamsService.findOneById(id);
