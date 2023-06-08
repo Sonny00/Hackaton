@@ -11,7 +11,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from '@prisma/client';
+import { Teams, User } from '@prisma/client';
 import { UsersInterceptor } from 'src/interceptors/users.interceptor';
 import { IsOwnerOrAdmin } from 'src/is-admin-or-owner.decorator';
 import { OwnerOrAdminGuard } from 'src/owner-or-admin.guard';
@@ -52,7 +52,7 @@ export class UsersController {
   @IsOwnerOrAdmin(Entities.USER)
   async updateUser(
     @Param('id') id: string,
-    @Body() user: User,
+    @Body(ValidationPipe) user: User,
   ): Promise<User | null> {
     return this.userService.updateUser(id, user);
   }
@@ -62,5 +62,15 @@ export class UsersController {
   @IsOwnerOrAdmin(Entities.USER)
   async deleteUser(@Param('id') id: string): Promise<void> {
     await this.userService.deleteUser(id);
+  }
+  
+  @Get('/team/:id')
+  async getTeam(@Param('id') id: string): Promise<Teams> {
+    try {
+      return await this.userService.getTeam(id);
+    }
+    catch (e) {
+      throw e;
+    }
   }
 }

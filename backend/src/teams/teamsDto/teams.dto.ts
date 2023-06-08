@@ -4,10 +4,6 @@ export class CreateTeamDto {
   @IsNotEmpty()
   @IsDefined()
   teamName: string;
-
-  @IsNotEmpty()
-  @IsDefined()
-  date: string;
 }
 
 export class UpdateTeamDto {

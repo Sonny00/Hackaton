@@ -39,7 +39,6 @@ model Teams {
   teamName  String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  date      DateTime
   members   User[]
 }
 

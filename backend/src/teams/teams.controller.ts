@@ -5,42 +5,39 @@ import { RolesGuard } from 'src/roles.guard';
 import { Roles } from 'src/roles.decorator';
 import { Teams } from '@prisma/client';
 import { CreateTeamDto, UpdateTeamDto } from './teamsDto/teams.dto';
-import { OwnerOrAdminGuard } from 'src/owner-or-admin.guard';
 import { UserRole } from 'src/users/userRole.enum';
 
 @Controller('teams')
-@UseGuards(AuthGuard('jwt'), RolesGuard, OwnerOrAdminGuard)
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class TeamsController {
     constructor(private readonly teamsService: TeamsService) {}
 
     @Get()
     @Roles(UserRole.ADMIN)
-    async getTeam(): Promise<Teams[]> {
+    async getTeams(): Promise<Teams[]> {
       return this.teamsService.getTeams();
     }
   
     @Get(':id')
-    @Roles('ADMIN')
-    // TODO: Add authorization
-    async geTeamById(@Param('id') id: string): Promise<Teams | null> {
+    @Roles(UserRole.ADMIN)
+    async geTeamById(@Param('id') id: string): Promise<Teams | null> {   
       return this.teamsService.findOneById(id);
     }
   
     @Post()
-    @UseGuards(RolesGuard)
-    @Roles('ADMIN')
+    @Roles(UserRole.ADMIN)
     async createTeam(@Body(ValidationPipe) user: CreateTeamDto): Promise<Teams> {
       return await this.teamsService.create(user);
     }
   
     @Put(':id')
-    // TODO: Add authorization
+    @Roles(UserRole.ADMIN)
     async updateTeam(@Param('id') id: string, @Body(ValidationPipe) team: UpdateTeamDto): Promise<Teams | null> {
       return this.teamsService.updateTeam(id, team);
     }
   
     @Delete(':id')
-    // TODO: Add authorization
+    @Roles(UserRole.ADMIN)
     async deleteTeam(@Param('id') id: string): Promise<void> {
       await this.teamsService.deleteTeam(id);
     }

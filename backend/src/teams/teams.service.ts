@@ -11,8 +11,7 @@ export class TeamsService {
     const teamData = this.prisma.teams.create({
       data: {
         ...data,
-        teamName: data.teamName,
-        date: new Date(data.date)
+        teamName: data.teamName
       },
     });
     return teamData;
