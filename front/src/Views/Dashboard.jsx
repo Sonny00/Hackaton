@@ -11,9 +11,7 @@ export default function Dashboard() {
         return <AdminDashboard />;
     }
 
-    if (isUser(user)) {
-        return <UserDashboard />;
-    }
+    return <UserDashboard />;
 
     return <Navigate to="/" />;
 }
