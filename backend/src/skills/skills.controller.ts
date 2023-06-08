@@ -15,23 +15,31 @@ import { Roles } from 'src/roles.decorator';
 import { RolesGuard } from 'src/roles.guard';
 import { CreateSkillDto } from './skillsDto/skills.dto';
 import { SkillsService } from './skills.service';
+import { OwnerOrAdminGuard } from 'src/owner-or-admin.guard';
+import { UserRole } from 'src/users/userRole.enum'; 
+import { Entities } from 'src/entity.enum';
+import { IsOwnerOrAdmin } from 'src/is-admin-or-owner.decorator';
 
 @Controller('skills')
-@UseGuards(AuthGuard('jwt'), RolesGuard)
+@UseGuards(AuthGuard('jwt'), RolesGuard, OwnerOrAdminGuard)
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
   @Get()
+  @Roles(UserRole.ADMIN)
   async getAllSkills(): Promise<Skills[]> {
     return this.skillsService.getAllSkills();
   }
 
   @Get(':id')
+  @Roles('ADMIN')
   async getSkillById(@Param('id') id: string): Promise<Skills | null> {
     return this.skillsService.getSkillById(id);
   }
 
   @Get()
+  @UseGuards(OwnerOrAdminGuard)
+  @IsOwnerOrAdmin(Entities.SKILLS)
   async getSkillByType(@Param('type') type: SkillType): Promise<Skills[]> {
     return this.skillsService.getSkillByType(type);
   }
@@ -44,6 +52,8 @@ export class SkillsController {
   }
 
   @Put(':id')
+  @UseGuards(OwnerOrAdminGuard)
+  @IsOwnerOrAdmin(Entities.SKILLS)
   async updateSkill(
     @Param('id') id: string,
     @Body() skill: Skills,
@@ -52,6 +62,8 @@ export class SkillsController {
   }
 
   @Delete(':id')
+  @UseGuards(OwnerOrAdminGuard)
+  @IsOwnerOrAdmin(Entities.SKILLS)
   async deleteSkill(@Param('id') id: string): Promise<void> {
     await this.skillsService.deleteSkill(id);
   }
