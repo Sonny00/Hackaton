@@ -1,3 +1,6 @@
 export enum Entities {
-  USER = 'User',
+  USER = 'USER',
+  SKILLS = 'SKILLS',
+  TEAMS = 'TEAMS',
+  EVENT = 'EVENT',
 }

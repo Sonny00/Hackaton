@@ -4,6 +4,7 @@ import { User } from '@prisma/client';
 import { Observable } from 'rxjs';
 import { UsersService } from './users/users.service';
 import { Entities } from './entity.enum';
+import { UserRole } from './users/userRole.enum';
 
 @Injectable()
 export class OwnerOrAdminGuard implements CanActivate {
@@ -13,7 +14,7 @@ export class OwnerOrAdminGuard implements CanActivate {
   ) {}
 
   private getSubject(entityName: string, id: string): Promise<User> {
-    if (entityName === 'User') {
+    if (entityName === Entities.USER) {
       return this.userService.findUserById(id);
     }
 
@@ -46,7 +47,7 @@ export class OwnerOrAdminGuard implements CanActivate {
     const subjectId = request.params.id;
 
     if (loggedInUser == null || !subjectId) return false;
-    if (loggedInUser.role === 'ADMIN') return true;
+    if (loggedInUser.role === UserRole.ADMIN) return true;
 
     return this.isOwner(loggedInUser, subjectId, entityName);
   }
