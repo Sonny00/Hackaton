@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useUser } from "../Contexts/UserProvider";
+import useApi from "../Hooks/useApi";
 import logo from "../assets/logoGrey.svg";
 
 export default function Login() {
+    const { user, login } = useUser();
+    const api = useApi();
     const [errorMessages, setErrorMessages] = useState({});
 
     const navigate = useNavigate();
@@ -11,37 +15,16 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         var { email, pass } = document.forms[0];
 
-        let response;
-
         try {
-            response = await fetch(
-                process.env.REACT_APP_BACKEND_URL + "/auth/login",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email: email.value,
-                        password: pass.value,
-                    }),
-                },
+            const token = await api.login(email.value, pass.value);
+            const user = await api.getLoggedInUser(
+                token.data.id,
+                token.data.access_token,
             );
-
-            const data = await response.json();
-
-            if (response.status === 201) {
-                localStorage.setItem("token", data.access_token);
-                navigate("/");
-            } else {
-                setErrorMessages({
-                    name: "error",
-                    message: "Saisie incorrectes",
-                });
-            }
+            login({ ...user.data, token: token.data.access_token });
+            navigate("/me");
         } catch (error) {
             setErrorMessages({ name: "error", message: "Saisie incorrectes" });
         }
@@ -89,6 +72,10 @@ export default function Login() {
             </form>
         </div>
     );
+
+    if (user != null) {
+        return <Navigate to="/me" />;
+    }
 
     return (
         <div className={classes.app}>

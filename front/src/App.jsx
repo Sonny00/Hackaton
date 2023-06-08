@@ -6,7 +6,7 @@ import {
     Routes,
 } from "react-router-dom";
 import { UserProvider } from "./Contexts/UserProvider";
-import AdminDashboard from "./Views/Admin";
+import Dashboard from "./Views/Dashboard";
 import Login from "./Views/Login";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/me" element={<AdminDashboard />} />
+                    <Route path="/me" element={<Dashboard />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>
