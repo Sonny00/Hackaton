@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Teams, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './userDto/users.dto';
 import * as bcrypt from 'bcrypt';
+import { TeamsService } from 'src/teams/teams.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private teamsService: TeamsService) {}
 
   async create(data: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -70,5 +71,13 @@ export class UsersService {
     await this.prisma.user.delete({
       where: { id },
     });
+  }
+
+  async getTeam(id: string): Promise<Teams> {
+    const currentUser = await this.findOne(id);
+    if (!currentUser.teamId) {
+      throw new NotFoundException('Team not found');
+    }
+    return this.teamsService.findOneById(currentUser.teamId);
   }
 }
