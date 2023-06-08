@@ -1,12 +1,29 @@
+import { createUseStyles } from "react-jss";
 import {
     Navigate,
     Route,
     BrowserRouter as Router,
     Routes,
 } from "react-router-dom";
-import { createUseStyles } from "react-jss";
 import { UserProvider } from "./Contexts/UserProvider";
-import Login from "./Views/login";
+import AdminDashboard from "./Views/Admin";
+import Login from "./Views/Login";
+
+function App() {
+    useColors();
+
+    return (
+        <UserProvider>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/me" element={<AdminDashboard />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            </Router>
+        </UserProvider>
+    );
+}
 
 const useColors = createUseStyles({
     "@global": {
@@ -17,21 +34,16 @@ const useColors = createUseStyles({
             "--color-green": "#00BB7E",
             "--color-blue": "#5B98D2",
         },
+        body: {
+            margin: 0,
+            width: "100%",
+            height: "100%",
+        },
+        "#root": {
+            width: "100%",
+            height: "100%",
+        },
     },
 });
-
-function App() {
-    useColors();
-
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<div>page d'acceuil</div>} />
-                <Route path="/login" element={<Login />} />
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-        </Router>
-    );
-}
 
 export default App;

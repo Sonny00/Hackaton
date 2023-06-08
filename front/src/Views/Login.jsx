@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { useNavigate } from "react-router-dom";
-import logo from "../logoCarbonGrey.svg";
+import logo from "../assets/logoGrey.svg";
 
 export default function Login() {
     const [errorMessages, setErrorMessages] = useState({});
