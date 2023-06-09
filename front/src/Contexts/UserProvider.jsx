@@ -3,7 +3,7 @@ import UserStorage from "../Services/UserStorage";
 
 const context = createContext({
     user: null,
-    login: () => {
+    login: (user) => {
         // no operation
     },
     logout: () => {

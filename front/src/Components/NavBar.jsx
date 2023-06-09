@@ -1,5 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
 import logo from "../assets/logoLight.svg";
 
 export default function NavBar() {

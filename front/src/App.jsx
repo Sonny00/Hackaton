@@ -9,6 +9,8 @@ import { UserProvider } from "./Contexts/UserProvider";
 import Dashboard from "./Views/Dashboard";
 import Login from "./Views/Login";
 
+import "bootstrap/dist/css/bootstrap.css";
+
 function App() {
     useColors();
 

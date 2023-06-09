@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 
 export default function SearchBar() {
