@@ -4,10 +4,14 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './userDto/users.dto';
 import * as bcrypt from 'bcrypt';
 import { TeamsService } from 'src/teams/teams.service';
+import { FiltersDTO } from './userDto/filters.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService, private teamsService: TeamsService) {}
+  constructor(
+    private prisma: PrismaService,
+    private teamsService: TeamsService,
+  ) {}
 
   async create(data: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -49,11 +53,39 @@ export class UsersService {
     return user;
   }
 
-  async getUsers(): Promise<User[]> {
+  async getUsers(query): Promise<User[]> {
+    const { search = undefined, skill = undefined } = query;
+
     const users = await this.prisma.user.findMany({
       include: {
         team: true,
         skills: true,
+      },
+      where: {
+        skills: skill
+          ? {
+              some: {
+                name: {
+                  equals: skill,
+                  mode: 'insensitive',
+                },
+              },
+            }
+          : undefined,
+        OR: [
+          {
+            firstname: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+          {
+            lastname: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+        ],
       },
     });
     return users;

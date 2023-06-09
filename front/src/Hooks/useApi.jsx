@@ -57,8 +57,11 @@ export default function useApi() {
         return apiClient.get(`users/${id}`, accessToken ?? token);
     }
 
-    function getUsers() {
-        return apiClient.get(`users`, token);
+    function getUsers(selectedFilter, searchInput) {
+        return apiClient.get(
+            `users?skill=${selectedFilter ?? ""}&search=${searchInput ?? ""}`,
+            token,
+        );
     }
 
     // Events

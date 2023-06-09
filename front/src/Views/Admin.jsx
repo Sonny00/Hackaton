@@ -4,6 +4,7 @@ import { RequireAdmin } from "../Components/RequireRole";
 import { AdminRoutes } from "../Constants";
 import { createUseStyles } from "react-jss";
 import Events from "../Components/Events";
+import ProfilePage from "../Components/ProfilePage";
 
 export default function AdminDashboard() {
     const { tabId } = useParams();
@@ -27,7 +28,7 @@ function Tab({ name }) {
     }
 
     if (name === AdminRoutes.EMPLOYEES) {
-        return <div>page des employés</div>;
+        return <ProfilePage />;
     }
 
     if (name === AdminRoutes.EVENTS) {
