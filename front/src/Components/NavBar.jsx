@@ -2,20 +2,17 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 import { NavLink } from "react-router-dom";
 import { AdminRoutes } from "../Constants";
-import logo from "../assets/logoLight.svg";
 import { useUser } from "../Contexts/UserProvider";
-import { navigate } from "react-router-dom";
+import logo from "../assets/logoLight.svg";
 
 export default function NavBar() {
+    const { logout } = useUser();
     const classes = useStyles();
 
-    const { logout } = useUser();
-      const handleLogout = () => {
+    const handleLogout = () => {
         logout();
         window.location.reload();
     };
-
-
 
     return (
         <div className="wrapper d-flex">
@@ -26,44 +23,31 @@ export default function NavBar() {
                         className={classes.link}
                         to={`/me/${AdminRoutes.STATS}`}
                     >
+                        <i className="bi bi-bar-chart"></i>
                         Tableau de bord
                     </NavLink>
                     <NavLink
                         className={classes.link}
                         to={`/me/${AdminRoutes.EMPLOYEES}`}
                     >
+                        <i className="bi bi-people"></i>
                         Les employés
                     </NavLink>
                     <NavLink
                         className={classes.link}
                         to={`/me/${AdminRoutes.EVENTS}`}
                     >
-                        <a
-                            href="#"
-                            style={{
-                                color: "#FDFDFD",
-                                display: "block",
-                                textDecoration: "none",
-                            }}
-                        >
-                            <i
-                                className="fas fa-users"
-                                style={{ width: "25px!important" }}
-                            ></i>
-                            Les compétences
-                        </a>
-                    </li>
-                   <li style={{ padding: "15px" }}>
-            <a
-                href="#"
-                style={{ color: "#FDFDFD", display: "block", textDecoration: "none" }}
-                onClick={handleLogout} 
-            >
-                <i className="fas fa-sign-out-alt" style={{ width: "25px!important" }}></i>
-                Déconnexion
-            </a>
-        </li>
-                </ul>
+                        <i className="bi bi-calendar4-event"></i>
+                        Les évenements
+                    </NavLink>
+                    <div
+                        className={`${classes.link} ${classes.logout}`}
+                        onClick={handleLogout}
+                    >
+                        <i className="bi bi-box-arrow-left"></i>
+                        Déconnexion
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -78,10 +62,17 @@ const useStyles = createUseStyles({
         padding: "10px 0",
     },
     link: {
-        display: "block",
+        display: "flex",
+        flexDirection: "row",
+        columnGap: "10px",
+        alignItems: "center",
         color: "var(--color-white)",
+        fontSize: "18px",
         textDecoration: "none",
         padding: "15px",
         borderBottom: "0.5px solid var(--color-white)",
+    },
+    logout: {
+        cursor: "pointer",
     },
 });
