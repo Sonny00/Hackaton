@@ -12,6 +12,8 @@ import Login from "./Views/Login";
 
 import "bootstrap/dist/css/bootstrap.css";
 
+import "bootstrap/dist/css/bootstrap.css";
+
 function App() {
     useColors();
 

@@ -61,5 +61,18 @@ export default function useApi() {
         return apiClient.get(`users`, token);
     }
 
-    return { login, getLoggedInUser, getUsers };
+    // Events
+    function getEvents() {
+        return apiClient.get(`events`, token);
+    }
+
+    function addEvent(event) {
+        return apiClient.post(
+            `events`,
+            event,
+            token
+        );
+    }
+
+    return { login, getLoggedInUser, getUsers, getEvents };
 }
