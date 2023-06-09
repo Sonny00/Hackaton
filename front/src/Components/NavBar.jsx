@@ -1,9 +1,14 @@
 import React from "react";
+import { createUseStyles } from "react-jss";
+import { NavLink } from "react-router-dom";
+import { AdminRoutes } from "../Constants";
 import logo from "../assets/logoLight.svg";
 import { useUser } from "../Contexts/UserProvider";
 import { navigate } from "react-router-dom";
 
 export default function NavBar() {
+    const classes = useStyles();
+
     const { logout } = useUser();
       const handleLogout = () => {
         logout();
@@ -14,65 +19,24 @@ export default function NavBar() {
 
     return (
         <div className="wrapper d-flex">
-            <div
-                className="sidebar"
-                style={{
-                    position: "fixed",
-                    width: "250px",
-                    height: "100%",
-                    background: "#282B2A",
-                    padding: "10px 0",
-                }}
-            >
+            <div className={classes.sidebar}>
                 <img src={logo} alt="logo" style={{ width: "100%" }} />
-                <ul style={{ padding: "0" }}>
-                    <li
-                        style={{
-                            padding: "15px",
-                            borderBottom: "0.5px solid #FDFDFD",
-                        }}
+                <div>
+                    <NavLink
+                        className={classes.link}
+                        to={`/me/${AdminRoutes.STATS}`}
                     >
-                        <a
-                            href="#"
-                            style={{
-                                color: "#FDFDFD",
-                                display: "block",
-                                textDecoration: "none",
-                            }}
-                        >
-                            <i
-                                className="fas fa-home"
-                                style={{ width: "25px!important" }}
-                            ></i>
-                            Tableau de bord
-                        </a>
-                    </li>
-                    <li
-                        style={{
-                            padding: "15px",
-                            borderBottom: "0.5px solid #FDFDFD",
-                        }}
+                        Tableau de bord
+                    </NavLink>
+                    <NavLink
+                        className={classes.link}
+                        to={`/me/${AdminRoutes.EMPLOYEES}`}
                     >
-                        <a
-                            href="#"
-                            style={{
-                                color: "#FDFDFD",
-                                display: "block",
-                                textDecoration: "none",
-                            }}
-                        >
-                            <i
-                                className="fas fa-users"
-                                style={{ width: "25px!important" }}
-                            ></i>
-                            Les employés
-                        </a>
-                    </li>
-                    <li
-                        style={{
-                            padding: "15px",
-                            borderBottom: "0.5px solid #FDFDFD",
-                        }}
+                        Les employés
+                    </NavLink>
+                    <NavLink
+                        className={classes.link}
+                        to={`/me/${AdminRoutes.EVENTS}`}
                     >
                         <a
                             href="#"
@@ -104,3 +68,20 @@ export default function NavBar() {
         </div>
     );
 }
+
+const useStyles = createUseStyles({
+    sidebar: {
+        position: "fixed",
+        width: "250px",
+        height: "100%",
+        background: "#282B2A",
+        padding: "10px 0",
+    },
+    link: {
+        display: "block",
+        color: "var(--color-white)",
+        textDecoration: "none",
+        padding: "15px",
+        borderBottom: "0.5px solid var(--color-white)",
+    },
+});

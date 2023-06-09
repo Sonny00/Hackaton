@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { UserProvider } from "./Contexts/UserProvider";
 import Dashboard from "./Views/Dashboard";
+import AdminDashboard from "./Views/Admin";
 import Login from "./Views/Login";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -20,6 +21,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/me" element={<Dashboard />} />
+                    <Route path="/me/:tabId" element={<AdminDashboard />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>
