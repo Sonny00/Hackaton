@@ -13,7 +13,7 @@ import {
     MDBProgressBar,
     MDBListGroup,
     MDBListGroupItem,
-    MDBTextArea 
+
 } from 'mdb-react-ui-kit';
 
 export default function UserDashboard() {
@@ -41,11 +41,26 @@ export default function UserDashboard() {
                         <MDBCard className="mb-4 mb-lg-0">
                             <MDBCardBody className="p-0">
                                 <MDBListGroup flush className="rounded-3">
-                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                                    
                                         
-                                        <MDBCardText><span className="text-primary font-italic me-1 ">Evenements</span></MDBCardText>
-                                    </MDBListGroupItem>
-                                    <MDBTextArea  id='textAreaExample' rows={4} />
+                                    <div style={{ minWidth: '21rem' }}>
+      <h6 className='bg-light p-2 border-top border-bottom text-primary font-italic me-1'>Evenements</h6></div>
+            <div className='ms-3'>
+              <p className='fw-bold mb-1'>Conférence Java</p>
+              <p className='text-muted mb-0'>12/08/2023</p>
+              </div>
+              <hr />
+              <div className='ms-3'>
+              <p className='fw-bold mb-1'>Conférence Web3</p>
+              <p className='text-muted mb-0'>20/09/2023</p>
+              </div>
+              <hr />
+              <div className='ms-3'>
+              <p className='fw-bold mb-1'>Figma workshop</p>
+              <p className='text-muted mb-0'>03/10/2023</p>
+              </div>
+              
+                                
                                 </MDBListGroup>
                             </MDBCardBody>
                         </MDBCard>
@@ -103,26 +118,27 @@ export default function UserDashboard() {
                             <MDBCol md="8">
                                 <MDBCard className="mb-4 mb-md-0">
                                     <MDBCardBody>
-                                        <MDBCardText className="mb-4"><span className="text-primary font-italic me-1 "> Compétences</span></MDBCardText>
+                                    <div style={{ minWidth: '21rem' }}>  
+                                    <h6 className='bg-light p-2 border-top border-bottom text-primary font-italic me-1'>Compétences</h6></div>
                                         <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
                                         <MDBProgress className="rounded">
-                                            <MDBProgressBar bgColor='success' striped animated width={80} valuemin={0} valuemax={100} />
+                                            <MDBProgressBar  width='50' valuemin={0} valuemax={100} />
                                         </MDBProgress>
                                         <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>HTML</MDBCardText>
                                         <MDBProgress className="rounded">
-                                            <MDBProgressBar striped animated width={72} valuemin={0} valuemax={100} />
+                                            <MDBProgressBar  width='20'valuemin={0} valuemax={100} />
                                         </MDBProgress>
                                         <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>CSS</MDBCardText>
                                         <MDBProgress className="rounded" >
-                                            <MDBProgressBar bgColor='success' striped animated width={89} valuemin={0} valuemax={100} />
+                                            <MDBProgressBar width='40' valuemin={0} valuemax={100} />
                                         </MDBProgress>
                                         <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>JAVA</MDBCardText>
                                         <MDBProgress className="rounded">
-                                            <MDBProgressBar bgColor='danger' striped animated width={55} valuemin={0} valuemax={100} style={{ fontSize: '.77rem' }} />
+                                        <MDBProgressBar  width='50' valuemin={0} valuemax={100} />
                                         </MDBProgress>
                                         <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>PHP</MDBCardText>
                                         <MDBProgress className="rounded">
-                                            <MDBProgressBar striped animated width={66} valuemin={0} valuemax={100} />
+                                            <MDBProgressBar width='50' valuemin={0} valuemax={100} />
                                         </MDBProgress>
                                     </MDBCardBody>
                                 </MDBCard>
