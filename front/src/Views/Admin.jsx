@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { RequireAdmin } from "../Components/RequireRole";
-import "bootstrap/dist/css/bootstrap.css";
 import NavBar from "../Components/NavBar";
 import useApi from "../Hooks/useApi";
 import SearchBar from "../Components/SearchBar";
