@@ -1,14 +1,14 @@
 import { Navigate } from "react-router-dom";
+import { AdminRoutes } from "../Constants";
 import { useUser } from "../Contexts/UserProvider";
-import AdminDashboard from "./Admin";
-import UserDashboard from "./User";
 import { isAdmin, isUser } from "../Utils/auth";
+import UserDashboard from "./User";
 
 export default function Dashboard() {
     const { user } = useUser();
 
     if (isAdmin(user)) {
-        return <AdminDashboard />;
+        return <Navigate to={`/me/${AdminRoutes.STATS}`} />;
     }
 
     if (isUser(user)) {
