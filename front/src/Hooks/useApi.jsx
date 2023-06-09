@@ -57,5 +57,9 @@ export default function useApi() {
         return apiClient.get(`users/${id}`, accessToken ?? token);
     }
 
-    return { login, getLoggedInUser };
+    function getUsers() {
+        return apiClient.get(`users`, token);
+    }
+
+    return { login, getLoggedInUser, getUsers };
 }

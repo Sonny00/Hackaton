@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEnum, IsDefined } from 'class-validator';
+import { IsNotEmpty, IsEnum, IsDefined, IsInt } from 'class-validator';
 import { SkillType } from '@prisma/client';
 
 export class CreateSkillDto {
@@ -8,6 +8,10 @@ export class CreateSkillDto {
   @IsNotEmpty()
   @IsDefined()
   name: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  level: number;
 
   @IsNotEmpty()
   @IsEnum(SkillType)
