@@ -12,7 +12,6 @@ import {
     MDBProgress,
     MDBProgressBar,
     MDBListGroup,
-    MDBListGroupItem,
 
 } from 'mdb-react-ui-kit';
 
@@ -45,7 +44,7 @@ export default function UserDashboard() {
                                     
                                         
                                     <div style={{ minWidth: '21rem' }}>
-      <h6 className='bg-light p-2 border-top border-bottom text-primary font-italic me-1'>Evenements</h6></div>
+      <h6 className='bg-light p-2 border-top border-bottom  text-center text-primary font-italic me-1'>Evenements</h6></div>
             <div className='ms-3'>
               <p className='fw-bold mb-1'>Conférence Java</p>
               <p className='text-muted mb-0'>12/08/2023</p>
@@ -60,6 +59,7 @@ export default function UserDashboard() {
               <p className='fw-bold mb-1'>Figma workshop</p>
               <p className='text-muted mb-0'>03/10/2023</p>
               </div>
+              <br />
               
                                 
                                 </MDBListGroup>
@@ -120,7 +120,7 @@ export default function UserDashboard() {
                                 <MDBCard className="mb-4 mb-md-0">
                                     <MDBCardBody>
                                     <div style={{ minWidth: '21rem' }}>  
-                                    <h6 className='bg-light p-2 border-top border-bottom text-primary font-italic me-1'>Compétences</h6></div>
+                                    <h6 className='bg-light p-2 border-top border-bottom text-center text-primary font-italic me-1'>Compétences</h6></div>
                                         <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar  width='50' valuemin={0} valuemax={100} />
@@ -141,6 +141,7 @@ export default function UserDashboard() {
                                         <MDBProgress className="rounded">
                                             <MDBProgressBar width='50' valuemin={0} valuemax={100} />
                                         </MDBProgress>
+                                       
                                     </MDBCardBody>
                                 </MDBCard>
                             </MDBCol>
