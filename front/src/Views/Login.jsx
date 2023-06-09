@@ -6,7 +6,7 @@ import useApi from "../Hooks/useApi";
 import logo from "../assets/logoGrey.svg";
 
 export default function Login() {
-    const { user, login } = useUser();
+    const { user, login,logout } = useUser();
     const api = useApi();
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -29,7 +29,7 @@ export default function Login() {
             setErrorMessages({ name: "error", message: "Saisie incorrectes" });
         }
     };
-
+        
     const renderErrorMessage = (message) => (
         <div
             className="error"

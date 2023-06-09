@@ -1,7 +1,17 @@
 import React from "react";
 import logo from "../assets/logoLight.svg";
+import { useUser } from "../Contexts/UserProvider";
+import { navigate } from "react-router-dom";
 
 export default function NavBar() {
+    const { logout } = useUser();
+      const handleLogout = () => {
+        logout();
+        window.location.reload();
+    };
+
+
+
     return (
         <div className="wrapper d-flex">
             <div
@@ -79,6 +89,16 @@ export default function NavBar() {
                             Les compétences
                         </a>
                     </li>
+                   <li style={{ padding: "15px" }}>
+            <a
+                href="#"
+                style={{ color: "#FDFDFD", display: "block", textDecoration: "none" }}
+                onClick={handleLogout} 
+            >
+                <i className="fas fa-sign-out-alt" style={{ width: "25px!important" }}></i>
+                Déconnexion
+            </a>
+        </li>
                 </ul>
             </div>
         </div>
