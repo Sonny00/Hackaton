@@ -22,6 +22,7 @@ function UserProvider({ children }) {
     }
 
     function logout() {
+        setUser(null);
         UserStorage.clear();
     }
 
