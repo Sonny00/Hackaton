@@ -1,6 +1,7 @@
 import { RequireUser } from "../Components/RequireRole";
 import React from "react";
 import { useState } from "react";
+import { useUser } from "../Contexts/UserProvider"; 
 import "bootstrap/dist/css/bootstrap.css";
 import {
     MDBCol,
@@ -33,41 +34,55 @@ import {
 export default function UserDashboard() {
     const [showNavbar, setShowNavbar] = useState(false);
     const toggleNavbar = () => setShowNavbar(!showNavbar);
+    const { user, logout } = useUser();
 
     const [basicModal, setBasicModal] = useState(false);
 
     const toggleShow = () => setBasicModal(!basicModal);
+     const handleLogout = () => {
+        logout();
+        window.location.reload();
+    };
+
     return (
         <section style={{ backgroundColor: "#eee" }}>
-            <MDBNavbar expand="lg" light bgColor="light">
+            
+            <style>
+                {`
+                .sticky-top {
+                    position: sticky;
+                    top: 0;
+                    z-index: 100;
+                }
+                .navbar-sticky-show .navbar-collapse {
+                    display: block;
+                }
+                .navbar-sticky-hide .navbar-collapse {
+                    display: none;
+                }
+                `}
+            </style>
+           <MDBNavbar
+                expand='lg'
+                light
+                bgColor='light'
+                className={showNavbar ? 'sticky-top navbar-sticky-show' : 'sticky-top navbar-sticky-hide'}
+            >
                 <MDBContainer fluid>
-                    <MDBNavbarBrand href="#">Mon application</MDBNavbarBrand>
+                    <MDBNavbarBrand href='#'>Carbon</MDBNavbarBrand>
                     <MDBNavbarToggler
-                        type="button"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
+                        type='button'
+                        aria-expanded='false'
+                        aria-label='Toggle navigation'
                         onClick={toggleNavbar}
                     >
-                        <i className="fas fa-bars" />
+                        <i className='fas fa-bars' />
                     </MDBNavbarToggler>
                     <MDBCollapse navbar show={showNavbar}>
-                        <MDBNavbarNav>
-                            <MDBNavbarItem>
-                                <MDBNavbarLink
-                                    active
-                                    aria-current="page"
-                                    href="#"
-                                >
-                                    Accueil
-                                </MDBNavbarLink>
-                            </MDBNavbarItem>
-                            <MDBNavbarItem>
-                                <MDBNavbarLink href="#">Profil</MDBNavbarLink>
-                            </MDBNavbarItem>
-                            <MDBNavbarItem>
-                                <MDBNavbarLink href="#">
-                                    Paramètres
-                                </MDBNavbarLink>
+                        <MDBNavbarNav className='ms-auto'>
+                            <MDBNavbarItem className="ms-auto" onClick={handleLogout}>
+                                                   <MDBNavbarBrand href='#'>Déconnexion</MDBNavbarBrand>
+
                             </MDBNavbarItem>
                         </MDBNavbarNav>
                     </MDBCollapse>
