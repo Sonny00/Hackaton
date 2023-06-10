@@ -20,6 +20,18 @@ export default function Events() {
         fetchData();
     }, []);
 
+    async function deleteEvent(event) {
+        try {
+            await api.deleteEvent(event.id);
+            setEvents((prev) => {
+                const events = prev.filter((e) => e.id !== event.id);
+                return events;
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className={classes.container}>
             <div className={classes.header}>Les évènements</div>
@@ -28,14 +40,18 @@ export default function Events() {
             </button>
             <div>
                 {events.map((event) => (
-                    <Event key={event.id} event={event} />
+                    <Event
+                        key={event.id}
+                        event={event}
+                        onDelete={deleteEvent}
+                    />
                 ))}
             </div>
         </div>
     );
 }
 
-const Event = ({ event }) => {
+const Event = ({ event, onDelete }) => {
     const startDate = new Date(event.startDate);
     const endDate = new Date(event.endDate);
 
@@ -82,7 +98,10 @@ const Event = ({ event }) => {
                                     <h4>Modifier</h4>
                                 </button>
                             </div>
-                            <div className="d-flex flex-row text-white">
+                            <div
+                                className="d-flex flex-row text-white"
+                                onClick={() => onDelete(event)}
+                            >
                                 <button className="btn btn-secondary">
                                     <h4>Supprimer</h4>
                                 </button>
