@@ -3,6 +3,7 @@ import NavBar from "../Components/NavBar";
 import { RequireAdmin } from "../Components/RequireRole";
 import { AdminRoutes } from "../Constants";
 import { createUseStyles } from "react-jss";
+import Events from "../Components/Events";
 
 export default function AdminDashboard() {
     const { tabId } = useParams();
@@ -11,9 +12,7 @@ export default function AdminDashboard() {
     return (
         <RequireAdmin>
             <div className={classes.container}>
-                <div className={classes.navbar}>
-                    <NavBar />
-                </div>
+                <NavBar />
                 <div className={classes.tab}>
                     <Tab name={tabId} />
                 </div>
@@ -32,7 +31,7 @@ function Tab({ name }) {
     }
 
     if (name === AdminRoutes.EVENTS) {
-        return <div>page des évenements</div>;
+        return <Events />;
     }
 
     return <Navigate to={`/me/${AdminRoutes.STATS}`} />;
@@ -42,11 +41,14 @@ const useStayles = createUseStyles({
     container: {
         display: "flex",
         flexDirection: "row",
-    },
-    navbar: {
-        flex: 2,
+        justifyContent: "center",
+        width: "100%",
+        height: "100%",
     },
     tab: {
-        flex: 6,
+        display: "flex",
+        flexDirection: "column",
+        width: "90%",
+        paddingInline: "15px",
     },
 });

@@ -15,38 +15,36 @@ export default function NavBar() {
     };
 
     return (
-        <div className="wrapper d-flex">
-            <div className={classes.sidebar}>
-                <img src={logo} alt="logo" style={{ width: "100%" }} />
-                <div>
-                    <NavLink
-                        className={classes.link}
-                        to={`/me/${AdminRoutes.STATS}`}
-                    >
-                        <i className="bi bi-bar-chart"></i>
-                        Tableau de bord
-                    </NavLink>
-                    <NavLink
-                        className={classes.link}
-                        to={`/me/${AdminRoutes.EMPLOYEES}`}
-                    >
-                        <i className="bi bi-people"></i>
-                        Les employés
-                    </NavLink>
-                    <NavLink
-                        className={classes.link}
-                        to={`/me/${AdminRoutes.EVENTS}`}
-                    >
-                        <i className="bi bi-calendar4-event"></i>
-                        Les évenements
-                    </NavLink>
-                    <div
-                        className={`${classes.link} ${classes.logout}`}
-                        onClick={handleLogout}
-                    >
-                        <i className="bi bi-box-arrow-left"></i>
-                        Déconnexion
-                    </div>
+        <div className={classes.container}>
+            <img src={logo} alt="logo" style={{ width: "100%" }} />
+            <div className={classes.linksContainer}>
+                <NavLink
+                    className={classes.link}
+                    to={`/me/${AdminRoutes.STATS}`}
+                >
+                    <i className="bi bi-bar-chart"></i>
+                    Tableau de bord
+                </NavLink>
+                <NavLink
+                    className={classes.link}
+                    to={`/me/${AdminRoutes.EMPLOYEES}`}
+                >
+                    <i className="bi bi-people"></i>
+                    Les employés
+                </NavLink>
+                <NavLink
+                    className={classes.link}
+                    to={`/me/${AdminRoutes.EVENTS}`}
+                >
+                    <i className="bi bi-calendar4-event"></i>
+                    Les évenements
+                </NavLink>
+                <div
+                    className={`${classes.link} ${classes.logout}`}
+                    onClick={handleLogout}
+                >
+                    <i className="bi bi-box-arrow-left"></i>
+                    Déconnexion
                 </div>
             </div>
         </div>
@@ -54,12 +52,19 @@ export default function NavBar() {
 }
 
 const useStyles = createUseStyles({
-    sidebar: {
-        position: "fixed",
+    container: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         width: "250px",
         height: "100%",
-        background: "#282B2A",
+        background: "var(--color-black)",
         padding: "10px 0",
+    },
+    linksContainer: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
     },
     link: {
         display: "flex",
