@@ -10,7 +10,11 @@ export class EventsService {
 
   create(createEventDto: CreateEventDto) {
     return this.prisma.event.create({
-      data: createEventDto,
+      data: {
+        ...createEventDto,
+        startDate: new Date(createEventDto.startDate),
+        endDate: new Date(createEventDto.endDate),
+      },
       include: {
         participants: {
           select: { id: true, firstname: true, lastname: true, email: true },
