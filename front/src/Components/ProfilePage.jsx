@@ -26,6 +26,20 @@ export default function ProfilePage() {
 
     const ProfilePage = (user) => {
         const { userData } = user;
+
+        const getRandomColor = () => {
+            const options = [
+                "#E53F49",
+                "#00BB7E",
+                "#5B98D2",
+                "#F2C94C",
+                "#F2994A",
+                "#BB6BD9",
+                "#BB6BD9",
+            ];
+            return options[Math.floor(Math.random() * options.length)];
+        };
+
         return (
             <div className="container mt-5 mb-5 w-65">
                 <div className="row">
@@ -33,8 +47,8 @@ export default function ProfilePage() {
                         className="col-sm-4 col-lg-4"
                         style={{
                             display: "flex",
-                            width: "300px",
-                            height: "300px",
+                            width: "250px",
+                            height: "250px",
                         }}
                     >
                         <img
@@ -47,34 +61,49 @@ export default function ProfilePage() {
                     </div>
                     <div className="col-md-6 col-lg-6">
                         <div className="d-flex flex-column">
-                            <div className="d-flex flex-row justify-content-between align-items-center p-3 bg-dark text-white">
-                                <h3 className="display-5">
+                            <div
+                                style={{
+                                    height: "70px",
+                                    marginTop: "35px",
+                                }}
+                                className="d-flex flex-row justify-content-between align-items-center p-3 bg-dark text-white"
+                            >
+                                <h3 className="display-10">
                                     {userData?.firstname} {userData?.lastname}
                                 </h3>
                             </div>
-                            <div className="p-3 bg-black text-white">
+                            <div
+                                style={{
+                                    height: "70px",
+                                }}
+                                className="p-3 bg-black text-white"
+                            >
                                 <h6>
                                     {userData?.team?.teamName} {" - "}
                                     {userData?.jobTitle}
                                 </h6>
                             </div>
                             <div className="d-flex flex-row text-white">
-                                <div className="p-4 bg-primary text-center">
-                                    <h4>90%</h4>
-                                    <h6>Bootstrap</h6>
-                                </div>
-                                <div className="p-3 bg-success text-center">
-                                    <h4>70%</h4>
-                                    <h6>Jquery</h6>
-                                </div>
-                                <div className="p-3 bg-warning text-center">
-                                    <h4>80%</h4>
-                                    <h6>HTML</h6>
-                                </div>
-                                <div className="p-3 bg-danger text-center">
-                                    <h4>75%</h4>
-                                    <h6>PHP</h6>
-                                </div>
+                                {userData?.skills &&
+                                    userData?.skills?.map((skill) => {
+                                        return (
+                                            <div
+                                                className="p-3"
+                                                key={skill.id}
+                                                style={{
+                                                    marginTop: "10px",
+                                                    marginRight: "10px",
+                                                    heigh: "30px",
+                                                    color: "white",
+                                                    borderRadius: "10px",
+                                                    backgroundColor:
+                                                        getRandomColor(),
+                                                }}
+                                            >
+                                                <h6>{skill.name}</h6>
+                                            </div>
+                                        );
+                                    })}
                             </div>
                         </div>
                     </div>
