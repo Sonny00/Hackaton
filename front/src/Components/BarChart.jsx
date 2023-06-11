@@ -2,10 +2,6 @@ import React from "react";
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "./theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
 import LineChart from "./LineChart";
 import ProgressCircle from "./ProgressCircle";
 
@@ -30,7 +26,7 @@ const Stats = () => {
       >
         <Box>
           <Typography variant="h6" color={colors.grey[100]}>
-            320
+            12,361
           </Typography>
           <Typography variant="subtitle1" color={colors.grey[100]}>
             Compétences validées
@@ -46,7 +42,7 @@ const Stats = () => {
       >
         <Box>
           <Typography variant="h6" color={colors.grey[100]}>
-            28
+            431,225
           </Typography>
           <Typography variant="subtitle1" color={colors.grey[100]}>
             Salariés formés
@@ -62,7 +58,7 @@ const Stats = () => {
       >
         <Box>
           <Typography variant="h6" color={colors.grey[100]}>
-            32
+            32,441
           </Typography>
           <Typography variant="subtitle1" color={colors.grey[100]}>
             Compétences en cours
@@ -78,7 +74,7 @@ const Stats = () => {
       >
         <Box>
           <Typography variant="h6" color={colors.grey[100]}>
-            18
+            1,325,134
           </Typography>
           <Typography variant="subtitle1" color={colors.grey[100]}>
             Demandes de formation
@@ -103,13 +99,13 @@ const Stats = () => {
             <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
               Évolution des compétences
             </Typography>
-            <Typography variant="h3" fontWeight="bold" color={colors.grey[500]}>
-              4,342.32 heures
+            <Typography variant="h3" fontWeight="bold" color={colors.greenAccent[500]}>
+              59,342.32 heures
             </Typography>
           </Box>
           <Box>
             <IconButton>
-              <DownloadOutlinedIcon sx={{ fontSize: "26px", color: colors.grey[500] }} />
+              <DownloadOutlinedIcon sx={{ fontSize: "26px", color: colors.greenAccent[500] }} />
             </IconButton>
           </Box>
         </Box>
@@ -132,7 +128,7 @@ const Stats = () => {
           p="15px"
         >
           <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-            Classement du niveau des employés
+            Transactions récentes
           </Typography>
         </Box>
       </Box>
@@ -156,7 +152,7 @@ const Stats = () => {
           <ProgressCircle size="125" />
           <Typography
             variant="h5"
-            color={colors.grey[100]}
+            color={colors.greenAccent[500]}
             sx={{ mt: "15px" }}
           >
             48,352 heures de formation
@@ -174,18 +170,24 @@ const Stats = () => {
           fontWeight="600"
           sx={{ padding: "30px 30px 0 30px" }}
         >
-
-          
-            Nombre d'employé actifs 
-          <ProgressCircle size="125" />
-          <Typography
-            variant="h5"
-            color={colors.grey[100]}
-            sx={{ mt: "15px" }}
-          >
-            Il y en actuellement : 150
-          </Typography>
-        
+          Quantité de formations
+        </Typography>
+        {/* <Box height="250px" mt="-20px">
+          <BarChart isDashboard={true} />
+        </Box> */}
+      </Box>
+      <Box
+        gridColumn="span 4"
+        gridRow="span 2"
+        backgroundColor={colors.primary[400]}
+        padding="30px"
+      >
+        <Typography
+          variant="h5"
+          fontWeight="600"
+          sx={{ marginBottom: "15px" }}
+        >
+          Trafic par zone géographique
         </Typography>
         {/* <Box height="200px">
           <GeographyChart isDashboard={true} />
