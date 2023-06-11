@@ -64,18 +64,18 @@ export default function useApi() {
         );
     }
 
+    function getSkills() {
+        return apiClient.get(`skills`, token);
+    }
+
     // Events
     function getEvents() {
         return apiClient.get(`events`, token);
     }
 
     function addEvent(event) {
-        return apiClient.post(
-            `events`,
-            event,
-            token
-        );
+        return apiClient.post(`events`, event, token);
     }
 
-    return { login, getLoggedInUser, getUsers, getEvents };
+    return { login, getLoggedInUser, getUsers, getSkills, getEvents };
 }

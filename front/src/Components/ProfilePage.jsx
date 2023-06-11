@@ -24,10 +24,6 @@ export default function ProfilePage() {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        console.log("selectedFilter", selectedFilter);
-    }, [selectedFilter]);
-
     const ProfilePage = (user) => {
         const { userData } = user;
         return (
@@ -114,7 +110,12 @@ export default function ProfilePage() {
             >
                 <div>
                     <DropDownFilter
-                        onValidate={(value) => {
+                        onValidate={() => {
+                            let value = selectedFilter;
+
+                            if (selectedFilter === "All") {
+                                value = "";
+                            }
                             fetchData(value, searchInput);
                         }}
                         selectedFilter={setSelectedFilter}
@@ -123,6 +124,7 @@ export default function ProfilePage() {
                 <div>
                     <SearchBar
                         onValidate={(value) => {
+                            setSelectedFilter("");
                             fetchData(selectedFilter, value);
                         }}
                         userInput={setSearchInput}

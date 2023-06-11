@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function SearchBar(props) {
-    const { onValidate = () => {}, userInput = () => {} } = props;
+    const { onValidate = () => {} } = props;
     const [searchInput, setSearchInput] = useState("");
 
     return (

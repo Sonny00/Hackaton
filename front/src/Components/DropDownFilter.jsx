@@ -1,8 +1,26 @@
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
+import useApi from "../Hooks/useApi";
 
 export default function DropDownFilter(props) {
     const { onValidate = () => {}, selectedFilter = () => {} } = props;
+
+    const [skills, setSkills] = useState();
+
+    const api = useApi();
+
+    const fetchSkills = async () => {
+        try {
+            const skills = await api.getSkills();
+            setSkills(skills?.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchSkills();
+    }, []);
 
     useEffect(() => {
         document
@@ -42,11 +60,11 @@ export default function DropDownFilter(props) {
                 name="cars"
                 id="cars"
             >
-                <option value="">Tous</option>
-                <option value="ReactJs">ReactJs</option>
-                <option value="NodeJs">NodeJs</option>
-                <option value="NextJs">NextJs</option>
-                <option value="NestJs">NestJs</option>
+                <option value="All">Tous</option>
+                {skills &&
+                    skills?.map((skill) => {
+                        return <option value={skill.name}>{skill.name}</option>;
+                    })}
             </select>
             <button
                 style={{
