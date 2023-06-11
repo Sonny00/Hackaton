@@ -1,7 +1,8 @@
 import { RequireUser } from "../Components/RequireRole";
 import React from "react";
 import { useState } from "react";
-import { useUser } from "../Contexts/UserProvider"; 
+import { useUser } from "../Contexts/UserProvider";
+import logo from "../assets/logoLight.svg";
 import "bootstrap/dist/css/bootstrap.css";
 import {
     MDBCol,
@@ -39,14 +40,13 @@ export default function UserDashboard() {
     const [basicModal, setBasicModal] = useState(false);
 
     const toggleShow = () => setBasicModal(!basicModal);
-     const handleLogout = () => {
+    const handleLogout = () => {
         logout();
         window.location.reload();
     };
 
     return (
         <section style={{ backgroundColor: "#eee" }}>
-            
             <style>
                 {`
                 .sticky-top {
@@ -60,29 +60,44 @@ export default function UserDashboard() {
                 .navbar-sticky-hide .navbar-collapse {
                     display: none;
                 }
+                .custom-progress-bar {
+                 background-color: black;
+                }
+                 .bg-custom {
+  background-color: rgba(33, 37, 41, 1); 
+}
+
+             
+
                 `}
             </style>
-           <MDBNavbar
-                expand='lg'
-                light
-                bgColor='light'
-                className={showNavbar ? 'sticky-top navbar-sticky-show' : 'sticky-top navbar-sticky-hide'}
+            <MDBNavbar
+                expand="lg"
+                dark
+                className={`sticky-top ${
+                    showNavbar ? "navbar-sticky-show" : "navbar-sticky-hide"
+                } bg-custom`}
             >
                 <MDBContainer fluid>
-                    <MDBNavbarBrand href='#'>Carbon</MDBNavbarBrand>
+                    <img src={logo} alt="logo" width="220" height="60" className="fs-2" />
+
                     <MDBNavbarToggler
-                        type='button'
-                        aria-expanded='false'
-                        aria-label='Toggle navigation'
+                        type="button"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
                         onClick={toggleNavbar}
                     >
-                        <i className='fas fa-bars' />
+                        <i className="fas fa-bars" />
                     </MDBNavbarToggler>
                     <MDBCollapse navbar show={showNavbar}>
-                        <MDBNavbarNav className='ms-auto'>
-                            <MDBNavbarItem className="ms-auto" onClick={handleLogout}>
-                                                   <MDBNavbarBrand href='#'>Déconnexion</MDBNavbarBrand>
-
+                        <MDBNavbarNav className="ms-auto">
+                            <MDBNavbarItem
+                                className="ms-auto"
+                                onClick={handleLogout}
+                            >
+                                <MDBNavbarBrand href="#">
+                                    Déconnexion
+                                </MDBNavbarBrand>
                             </MDBNavbarItem>
                         </MDBNavbarNav>
                     </MDBCollapse>
@@ -101,16 +116,16 @@ export default function UserDashboard() {
                                     fluid
                                 />
                                 <div class="d-flex justify-content-center">
-                                    <div class="btn btn-primary btn-rounded">
+                                    <div class="btn btn-dark btn-rounded">
                                         <label
                                             class="form-label text-white m-1"
                                             for="customFile2"
                                         >
-                                            Choose file
+                                            Votre image de profil
                                         </label>
                                         <input
                                             type="file"
-                                            class="form-control d-none"
+                                            class="form-control d-none text-dark"
                                             id="customFile2"
                                         />
                                     </div>
@@ -121,7 +136,7 @@ export default function UserDashboard() {
                             <MDBCardBody className="p-0">
                                 <MDBListGroup flush className="rounded-3">
                                     <div style={{ minWidth: "21rem" }}>
-                                        <h6 className="bg-light p-2 border-top border-bottom  text-center text-primary font-italic me-1">
+                                        <h6 className="bg-light p-2 border-top border-bottom  text-center text-primary font-italic me-1 text-black">
                                             Evenements
                                         </h6>
                                     </div>
@@ -162,7 +177,7 @@ export default function UserDashboard() {
                                 <MDBRow>
                                     <MDBCol sm="3">
                                         <MDBCardText>
-                                            <span className="text-primary font-italic me-1">
+                                            <span className="text-primary font-italic me-1 text-black">
                                                 Nom
                                             </span>
                                         </MDBCardText>
@@ -177,7 +192,7 @@ export default function UserDashboard() {
                                 <MDBRow>
                                     <MDBCol sm="3">
                                         <MDBCardText>
-                                            <span className="text-primary font-italic me-1">
+                                            <span className="text-primary font-italic me-1 text-black">
                                                 Prénom
                                             </span>
                                         </MDBCardText>
@@ -193,7 +208,7 @@ export default function UserDashboard() {
                                 <MDBRow>
                                     <MDBCol sm="3">
                                         <MDBCardText>
-                                            <span className="text-primary font-italic me-1">
+                                            <span className="text-primary font-italic me-1 text-black">
                                                 Email
                                             </span>
                                         </MDBCardText>
@@ -208,7 +223,7 @@ export default function UserDashboard() {
                                 <MDBRow>
                                     <MDBCol sm="3">
                                         <MDBCardText>
-                                            <span className="text-primary font-italic me-1">
+                                            <span className="text-primary font-italic me-1 text-black">
                                                 Poste
                                             </span>
                                         </MDBCardText>
@@ -223,7 +238,7 @@ export default function UserDashboard() {
                                 <MDBRow>
                                     <MDBCol sm="3">
                                         <MDBCardText>
-                                            <span className="text-primary font-italic me-1">
+                                            <span className="text-primary font-italic me-1 text-black">
                                                 Equipe
                                             </span>
                                         </MDBCardText>
@@ -241,7 +256,7 @@ export default function UserDashboard() {
                                 <MDBCard className="mb-4 mb-md-0">
                                     <MDBCardBody>
                                         <div style={{ minWidth: "21rem" }}>
-                                            <h6 className="bg-light p-2 border-top border-bottom text-center text-primary font-italic me-1">
+                                            <h6 class="bg-light p-2 border-top border-bottom text-center text-primary font-italic me-1 text-black">
                                                 Compétences
                                             </h6>
                                         </div>
@@ -256,6 +271,7 @@ export default function UserDashboard() {
                                                 width="50"
                                                 valuemin={0}
                                                 valuemax={100}
+                                                className="custom-progress-bar"
                                             />
                                         </MDBProgress>
                                         <MDBCardText
@@ -269,6 +285,7 @@ export default function UserDashboard() {
                                                 width="20"
                                                 valuemin={0}
                                                 valuemax={100}
+                                                className="custom-progress-bar"
                                             />
                                         </MDBProgress>
                                         <MDBCardText
@@ -282,6 +299,7 @@ export default function UserDashboard() {
                                                 width="40"
                                                 valuemin={0}
                                                 valuemax={100}
+                                                className="custom-progress-bar"
                                             />
                                         </MDBProgress>
                                         <MDBCardText
@@ -295,6 +313,7 @@ export default function UserDashboard() {
                                                 width="50"
                                                 valuemin={0}
                                                 valuemax={100}
+                                                className="custom-progress-bar"
                                             />
                                         </MDBProgress>
                                         <MDBCardText
@@ -308,12 +327,13 @@ export default function UserDashboard() {
                                                 width="50"
                                                 valuemin={0}
                                                 valuemax={100}
+                                                className="custom-progress-bar"
                                             />
                                         </MDBProgress>
                                     </MDBCardBody>
                                     <MDBCardBody className="d-flex justify-content-center">
                                         <label
-                                            class="ripple ripple-surface ripple-surface-light btn btn-primary"
+                                            class="ripple ripple-surface ripple-surface-light btn btn-dark"
                                             for="Ajouter"
                                         >
                                             Ajouter
@@ -322,7 +342,7 @@ export default function UserDashboard() {
                                         <input
                                             type="button"
                                             onClick={toggleShow}
-                                            class="form-control d-none"
+                                            class="form-control d-none text-dark"
                                             id="Ajouter"
                                         />
                                         <MDBModal
@@ -334,11 +354,12 @@ export default function UserDashboard() {
                                                 <MDBModalContent>
                                                     <MDBModalHeader>
                                                         <MDBModalTitle>
-                                                            Ajouter une compétence
+                                                            Ajouter une
+                                                            compétence
                                                         </MDBModalTitle>
                                                         <MDBBtn
                                                             className="btn-close"
-                                                            color="none"
+                                                            color="black"
                                                             onClick={toggleShow}
                                                         ></MDBBtn>
                                                     </MDBModalHeader>
