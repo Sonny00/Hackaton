@@ -56,14 +56,18 @@ export default function DropDownFilter(props) {
                     borderRadius: "4px",
                     boxSizing: "border-box",
                 }}
-                class="options"
+                className="options"
                 name="cars"
                 id="cars"
             >
                 <option value="All">Tous</option>
                 {skills &&
                     skills?.map((skill) => {
-                        return <option value={skill.name}>{skill.name}</option>;
+                        return (
+                            <option key={skill.id} value={skill.name}>
+                                {skill.name}
+                            </option>
+                        );
                     })}
             </select>
             <button
@@ -79,7 +83,7 @@ export default function DropDownFilter(props) {
                     boxSizing: "border-box",
                 }}
                 onClick={onValidate}
-                class="changeSelected"
+                className="changeSelected"
             >
                 Appliquer
             </button>
