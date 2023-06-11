@@ -59,6 +59,7 @@ export default function UserDashboard() {
                 const response = await api.getUser(loggedUser);
                 const { data } = response;
                 setUsers(data);
+                console.log(data)
             } catch (error) {
                 console.error("Error fetching users:", error);
             }

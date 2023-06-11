@@ -64,6 +64,10 @@ export default function useApi() {
         );
     }
 
+    function getUser(id) {
+        return apiClient.get(`users/${id}`, token);
+    }
+
     function addUser(user) {
         return apiClient.post("users", { ...user }, token);
     }
@@ -101,6 +105,7 @@ export default function useApi() {
         login,
         getLoggedInUser,
         getUsers,
+        getUser,
         addUser,
         updateUser,
         deleteUser,
