@@ -5,6 +5,10 @@ import { AdminRoutes } from "../Constants";
 import { createUseStyles } from "react-jss";
 import Events from "../Components/Events";
 import ProfilePage from "../Components/ProfilePage";
+import Stats from "../Components/Statistiques";
+import { Doughnut } from 'react-chartjs-2';
+
+
 
 export default function AdminDashboard() {
     const { tabId } = useParams();
@@ -24,7 +28,7 @@ export default function AdminDashboard() {
 
 function Tab({ name }) {
     if (name === AdminRoutes.STATS) {
-        return <div>page des statistiques</div>;
+        return <Stats />;
     }
 
     if (name === AdminRoutes.EMPLOYEES) {
