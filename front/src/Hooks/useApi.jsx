@@ -74,8 +74,25 @@ export default function useApi() {
     }
 
     function addEvent(event) {
-        return apiClient.post(`events`, event, token);
+        return apiClient.post("events", { ...event }, token);
     }
 
-    return { login, getLoggedInUser, getUsers, getSkills, getEvents };
+    function updateEvent(id, data) {
+        return apiClient.patch(`events/${id}`, { ...data }, token);
+    }
+
+    function deleteEvent(id) {
+        return apiClient.delete(`events/${id}`, token);
+    }
+
+    return {
+        login,
+        getLoggedInUser,
+        getUsers,
+        getSkills,
+        getEvents,
+        addEvent,
+        updateEvent,
+        deleteEvent,
+    };
 }
