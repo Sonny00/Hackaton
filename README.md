@@ -21,7 +21,7 @@ Ceci est un site web développé dans le cadre d'un Hackaton utilisant React.js 
   - make front-start # pour lancer le front
 
 # Remarques
-- Assurez-vous que les ports 3000 et 8080 sont disponibles sur votre machine avant de lancer l'application.
+- Assurez-vous que les ports 3000 et 8000 sont disponibles sur votre machine avant de lancer l'application.
 
 # Auteur
 Ce projet a été développé par les développeurs de l'ESGI. Pour toute question ou remarque, veuillez me contacter à l'adresse myges@quimarche.pas
