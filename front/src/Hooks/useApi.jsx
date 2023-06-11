@@ -57,8 +57,15 @@ export default function useApi() {
         return apiClient.get(`users/${id}`, accessToken ?? token);
     }
 
-    function getUsers() {
-        return apiClient.get(`users`, token);
+    function getUsers(selectedFilter, searchInput) {
+        return apiClient.get(
+            `users?skill=${selectedFilter ?? ""}&search=${searchInput ?? ""}`,
+            token,
+        );
+    }
+
+    function getSkills() {
+        return apiClient.get(`skills`, token);
     }
 
     // Events
@@ -67,12 +74,8 @@ export default function useApi() {
     }
 
     function addEvent(event) {
-        return apiClient.post(
-            `events`,
-            event,
-            token
-        );
+        return apiClient.post(`events`, event, token);
     }
 
-    return { login, getLoggedInUser, getUsers, getEvents };
+    return { login, getLoggedInUser, getUsers, getSkills, getEvents };
 }

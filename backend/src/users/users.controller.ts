@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UseInterceptors,
   ValidationPipe,
@@ -21,6 +22,8 @@ import { CreateUserDto } from './userDto/users.dto';
 import { UsersService } from './users.service';
 import { Entities } from 'src/entity.enum';
 import { UserRole } from './userRole.enum';
+import { FiltersDTO } from './userDto/filters.dto';
+import { query } from 'express';
 
 @Controller('users')
 @UseInterceptors(UsersInterceptor)
@@ -30,8 +33,8 @@ export class UsersController {
 
   @Get()
   @Roles(UserRole.ADMIN)
-  async getUsers(): Promise<User[]> {
-    return this.userService.getUsers();
+  async getUsers(@Query() query): Promise<User[]> {
+    return this.userService.getUsers(query);
   }
 
   @Get(':id')
@@ -63,13 +66,12 @@ export class UsersController {
   async deleteUser(@Param('id') id: string): Promise<void> {
     await this.userService.deleteUser(id);
   }
-  
+
   @Get('/team/:id')
   async getTeam(@Param('id') id: string): Promise<Teams> {
     try {
       return await this.userService.getTeam(id);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
