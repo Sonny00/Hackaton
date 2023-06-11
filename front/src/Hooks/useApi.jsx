@@ -85,6 +85,16 @@ export default function useApi() {
         return apiClient.delete(`events/${id}`, token);
     }
 
+    function getUser(id) {
+        return apiClient.get(`users/${id}`, token);
+      }
+    
+    function createSkill(skillName, description = '', level, UserId, type) {
+        return apiClient.post("skills", { skillName, level, description, UserId, type }, token);
+}
+
+
+
     return {
         login,
         getLoggedInUser,
@@ -94,5 +104,5 @@ export default function useApi() {
         addEvent,
         updateEvent,
         deleteEvent,
-    };
+   , getUser, createSkill};
 }

@@ -1,9 +1,11 @@
 import { RequireUser } from "../Components/RequireRole";
 import React from "react";
 import { useState } from "react";
+import useApi from "../Hooks/useApi";
 import { useUser } from "../Contexts/UserProvider";
 import logo from "../assets/logoLight.svg";
 import "bootstrap/dist/css/bootstrap.css";
+import { useEffect } from "react";
 import {
     MDBCol,
     MDBContainer,
@@ -36,40 +38,78 @@ export default function UserDashboard() {
     const [showNavbar, setShowNavbar] = useState(false);
     const toggleNavbar = () => setShowNavbar(!showNavbar);
     const { user, logout } = useUser();
+    const [users, setUsers] = useState([]);
 
     const [basicModal, setBasicModal] = useState(false);
-
+    const api = useApi();
+    const [name, setname] = useState("");
+    const [level, setLevel] = useState("");
+    const [type, setType] = useState("");
     const toggleShow = () => setBasicModal(!basicModal);
     const handleLogout = () => {
         logout();
         window.location.reload();
     };
 
+    const loggedUser = user.id;
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await api.getUser(loggedUser);
+                const { data } = response;
+                setUsers(data);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+
+        fetchUsers();
+    }, [api]);
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            console.log("level:", parseInt(level), typeof parseInt(level));
+            console.log("type:", type, typeof type);
+            console.log("name:", name, typeof name);
+
+            await api.createSkill(name, "", level, user.id, type);
+            setname("");
+            setLevel("");
+            setType("");
+            toggleShow();
+        } catch (error) {
+            console.error("Error creating skill:", error);
+        }
+    };
+
     return (
         <section style={{ backgroundColor: "#eee" }}>
             <style>
                 {`
-                .sticky-top {
-                    position: sticky;
-                    top: 0;
-                    z-index: 100;
-                }
-                .navbar-sticky-show .navbar-collapse {
-                    display: block;
-                }
-                .navbar-sticky-hide .navbar-collapse {
-                    display: none;
-                }
-                .custom-progress-bar {
-                 background-color: black;
-                }
-                 .bg-custom {
-  background-color: rgba(33, 37, 41, 1); 
-}
+                    .sticky-top {
+                        position: sticky;
+                        top: 0;
+                        z-index: 100;
+                    }
+                    .navbar-sticky-show .navbar-collapse {
+                        display: block;
+                    }
+                    .navbar-sticky-hide .navbar-collapse {
+                        display: none;
+                    }
+                    .custom-progress-bar {
+                    background-color: black;
+                    }
+                    .bg-custom {
+    background-color: rgba(33, 37, 41, 1); 
+    }
 
-             
+                
 
-                `}
+                    `}
             </style>
             <MDBNavbar
                 expand="lg"
@@ -79,7 +119,13 @@ export default function UserDashboard() {
                 } bg-custom`}
             >
                 <MDBContainer fluid>
-                    <img src={logo} alt="logo" width="220" height="60" className="fs-2" />
+                    <img
+                        src={logo}
+                        alt="logo"
+                        width="220"
+                        height="60"
+                        className="fs-2"
+                    />
 
                     <MDBNavbarToggler
                         type="button"
@@ -184,7 +230,7 @@ export default function UserDashboard() {
                                     </MDBCol>
                                     <MDBCol sm="9">
                                         <MDBCardText className="text-muted">
-                                            Johnatan
+                                            {users.lastname}
                                         </MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
@@ -199,8 +245,7 @@ export default function UserDashboard() {
                                     </MDBCol>
                                     <MDBCol sm="9">
                                         <MDBCardText className="text-muted">
-                                            {" "}
-                                            Smith
+                                            {users.firstname}
                                         </MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
@@ -215,7 +260,7 @@ export default function UserDashboard() {
                                     </MDBCol>
                                     <MDBCol sm="9">
                                         <MDBCardText className="text-muted">
-                                            John@example.fr
+                                            {users.email}
                                         </MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
@@ -230,7 +275,7 @@ export default function UserDashboard() {
                                     </MDBCol>
                                     <MDBCol sm="9">
                                         <MDBCardText className="text-muted">
-                                            développeur web front end
+                                            {users.jobTitle}
                                         </MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
@@ -245,7 +290,7 @@ export default function UserDashboard() {
                                     </MDBCol>
                                     <MDBCol sm="9">
                                         <MDBCardText className="text-muted">
-                                            1
+                                            {users.teamId}
                                         </MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
@@ -364,11 +409,16 @@ export default function UserDashboard() {
                                                         ></MDBBtn>
                                                     </MDBModalHeader>
                                                     <MDBModalBody>
-                                                        {" "}
-                                                        <form>
+                                                        <form
+                                                            onSubmit={(e) =>
+                                                                handleFormSubmit(
+                                                                    e,
+                                                                )
+                                                            }
+                                                        >
                                                             <div className="mb-3">
                                                                 <label
-                                                                    htmlFor="competence"
+                                                                    htmlFor="name"
                                                                     className="form-label"
                                                                 >
                                                                     Compétence
@@ -376,41 +426,92 @@ export default function UserDashboard() {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
-                                                                    id="competence"
-                                                                    // value={competence}
-                                                                    // onChange={handleCompetenceChange}
+                                                                    id="name"
+                                                                    value={name}
+                                                                    onChange={(
+                                                                        e,
+                                                                    ) =>
+                                                                        setname(
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        )
+                                                                    }
                                                                     required
                                                                 />
                                                             </div>
                                                             <div className="mb-3">
                                                                 <label
-                                                                    htmlFor="niveau"
+                                                                    htmlFor="level"
                                                                     className="form-label"
                                                                 >
                                                                     Niveau de
                                                                     compétence
+                                                                    (en
+                                                                    pourcentage
+                                                                    %)
                                                                 </label>
                                                                 <input
-                                                                    type="text"
+                                                                    type="number"
                                                                     className="form-control"
-                                                                    id="niveau"
-                                                                    // value={niveau}
-                                                                    // onChange={handleNiveauChange}
+                                                                    id="level"
+                                                                    value={
+                                                                        level
+                                                                    }
+                                                                    min="0"
+                                                                    max="100"
+                                                                    step="10"
+                                                                    onChange={(
+                                                                        e,
+                                                                    ) =>
+                                                                        setLevel(
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        )
+                                                                    }
                                                                     required
                                                                 />
                                                             </div>
+
+                                                            <div className="mb-3">
+                                                                <select
+                                                                    class="form-select"
+                                                                    aria-label="Default select example"
+                                                                    onChange={(
+                                                                        e,
+                                                                    ) =>
+                                                                        setType(
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <option
+                                                                        selected
+                                                                    >
+                                                                        Type de
+                                                                        compétence
+                                                                    </option>
+                                                                    <option value="INFRA">
+                                                                        INFRA
+                                                                    </option>
+                                                                    <option value="FRONT">
+                                                                        FRONT
+                                                                    </option>
+                                                                    <option value="BACK">
+                                                                        BACK
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <input
+                                                                type="submit"
+                                                                className="ripple ripple-surface ripple-surface-light btn btn-dark"
+                                                                value="Ajouter"
+                                                            />
                                                         </form>
                                                     </MDBModalBody>
-
-                                                    <MDBModalFooter>
-                                                        <input
-                                                            type="submit"
-                                                            onClick={toggleShow}
-                                                            class="ripple ripple-surface ripple-surface-light btn btn-primary"
-                                                            value="Ajouter"
-                                                            id="Sauvegarder"
-                                                        />
-                                                    </MDBModalFooter>
                                                 </MDBModalContent>
                                             </MDBModalDialog>
                                         </MDBModal>
