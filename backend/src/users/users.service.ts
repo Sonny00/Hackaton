@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './userDto/users.dto';
 import * as bcrypt from 'bcrypt';
 import { TeamsService } from 'src/teams/teams.service';
-import { FiltersDTO } from './userDto/filters.dto';
+import { UpdateUserDto } from './userDto/update-users.dto';
 
 @Injectable()
 export class UsersService {
@@ -57,6 +57,9 @@ export class UsersService {
     const { search = undefined, skill = undefined } = query;
 
     const users = await this.prisma.user.findMany({
+      orderBy: {
+        firstname: 'desc',
+      },
       include: {
         team: true,
         skills: true,
@@ -91,18 +94,22 @@ export class UsersService {
     return users;
   }
 
-  async updateUser(id: string, user: User): Promise<User | null> {
+  async updateUser(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User | null> {
     const updatedUser = await this.prisma.user.update({
       where: { id },
-      data: user,
+      data: updateUserDto,
     });
     return updatedUser;
   }
 
-  async deleteUser(id: string): Promise<void> {
+  async deleteUser(id: string): Promise<string> {
     await this.prisma.user.delete({
       where: { id },
     });
+    return 'deleted';
   }
 
   async getTeam(id: string): Promise<Teams> {

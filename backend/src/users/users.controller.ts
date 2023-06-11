@@ -4,8 +4,8 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -22,8 +22,7 @@ import { CreateUserDto } from './userDto/users.dto';
 import { UsersService } from './users.service';
 import { Entities } from 'src/entity.enum';
 import { UserRole } from './userRole.enum';
-import { FiltersDTO } from './userDto/filters.dto';
-import { query } from 'express';
+import { UpdateUserDto } from './userDto/update-users.dto';
 
 @Controller('users')
 @UseInterceptors(UsersInterceptor)
@@ -50,21 +49,22 @@ export class UsersController {
     return await this.userService.create(user);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @UseGuards(OwnerOrAdminGuard)
   @IsOwnerOrAdmin(Entities.USER)
   async updateUser(
     @Param('id') id: string,
-    @Body(ValidationPipe) user: User,
+    @Body(ValidationPipe) updateUser: UpdateUserDto,
   ): Promise<User | null> {
-    return this.userService.updateUser(id, user);
+    return this.userService.updateUser(id, updateUser);
   }
 
   @Delete(':id')
   @UseGuards(OwnerOrAdminGuard)
   @IsOwnerOrAdmin(Entities.USER)
-  async deleteUser(@Param('id') id: string): Promise<void> {
+  async deleteUser(@Param('id') id: string): Promise<string> {
     await this.userService.deleteUser(id);
+    return 'deleted';
   }
 
   @Get('/team/:id')

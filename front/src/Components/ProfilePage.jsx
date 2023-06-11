@@ -3,20 +3,36 @@ import "bootstrap/dist/css/bootstrap.css";
 import useApi from "../Hooks/useApi";
 import DropDownFilter from "../Components/DropDownFilter";
 import SearchBar from "./SearchBar";
+import {
+    AppBar,
+    Dialog,
+    IconButton,
+    Toolbar,
+    Typography,
+    Button,
+    Card,
+    CardActions,
+} from "@mui/material";
+import { createUseStyles } from "react-jss";
+import UserForm from "./UserForm";
 
 export default function ProfilePage() {
     const [userData, setUserData] = useState(null);
     const [selectedFilter, setSelectedFilter] = useState("");
     const [searchInput, setSearchInput] = useState("");
+    const [openAddUser, setOpenAddUser] = useState(false);
+    const [openEditUser, setOpenEditUser] = useState(false);
+    const [selectedUserToEdit, setSelectedUserToEdit] = useState(null);
 
     const api = useApi();
+    const classes = useStyles();
 
     const fetchData = async (selectedFilter, searchInput) => {
         try {
             const users = await api.getUsers(selectedFilter, searchInput);
             setUserData(users?.data);
         } catch (error) {
-            console.log(error);
+            alert("Une erreur est survenue");
         }
     };
 
@@ -24,9 +40,46 @@ export default function ProfilePage() {
         fetchData();
     }, []);
 
-    const ProfilePage = (user) => {
-        const { userData } = user;
+    async function addUser(user) {
+        try {
+            const { data: createdEvent } = await api.addUser(user);
+            setUserData((prev) => [...prev, createdEvent]);
+            setOpenAddUser(false);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
+    async function updateUser(id, data) {
+        const updateData = {
+            firstname: data?.firstname,
+            lastname: data?.lastname,
+            email: data?.email,
+            jobTitle: data?.jobTitle,
+        };
+
+        try {
+            const { data: updatedUser } = await api.updateUser(id, updateData);
+            setOpenEditUser(false);
+            fetchData(selectedFilter, searchInput);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function deleteUser(user) {
+        try {
+            await api.deleteUser(user.id);
+            setUserData((prev) => {
+                const users = prev.filter((e) => e.id !== user.id);
+                return users;
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const ProfilePage = ({ userData }) => {
         const getRandomColor = () => {
             const options = [
                 "#E53F49",
@@ -83,6 +136,68 @@ export default function ProfilePage() {
                                     {userData?.jobTitle}
                                 </h6>
                             </div>
+                            <Card sx={{ marginTop: "30px" }}>
+                                <CardActions sx={{ marginBottom: "15px" }}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => {
+                                            setOpenEditUser(true);
+                                            setSelectedUserToEdit(userData);
+                                        }}
+                                    >
+                                        Modifier
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        onClick={() => deleteUser(userData)}
+                                    >
+                                        Supprimer
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                            <Dialog
+                                open={openEditUser}
+                                fullScreen
+                                onClose={() => {
+                                    setOpenEditUser(false);
+                                }}
+                            >
+                                <AppBar sx={{ position: "relative" }}>
+                                    <Toolbar>
+                                        <IconButton
+                                            edge="start"
+                                            color="inherit"
+                                            onClick={() => {
+                                                setOpenEditUser(false);
+                                            }}
+                                            aria-label="close"
+                                        >
+                                            <i className="bi bi-x"></i>
+                                        </IconButton>
+                                        <Typography
+                                            sx={{ ml: 2, flex: 1 }}
+                                            variant="h6"
+                                            component="div"
+                                        >
+                                            Modifier un évènement
+                                        </Typography>
+                                    </Toolbar>
+                                </AppBar>
+
+                                <div className={classes.dialogContent}>
+                                    <UserForm
+                                        user={selectedUserToEdit}
+                                        onSubmit={(user) => {
+                                            updateUser(
+                                                selectedUserToEdit.id,
+                                                user,
+                                            );
+                                        }}
+                                        isUpdate={true}
+                                    />
+                                </div>
+                            </Dialog>
                             <div className="d-flex flex-row text-white">
                                 {userData?.skills &&
                                     userData?.skills?.map((skill) => {
@@ -159,6 +274,15 @@ export default function ProfilePage() {
                         userInput={setSearchInput}
                     />
                 </div>
+                <Button
+                    className={classes.btnAdd}
+                    variant="contained"
+                    onClick={() => {
+                        setOpenAddUser(true);
+                    }}
+                >
+                    Ajouter
+                </Button>
             </div>
             <hr class="solid"></hr>
             {userData && (
@@ -172,6 +296,74 @@ export default function ProfilePage() {
                     })}
                 </div>
             )}
+            <Dialog
+                open={openAddUser}
+                fullScreen
+                onClose={() => {
+                    setOpenAddUser(false);
+                }}
+            >
+                <AppBar sx={{ position: "relative" }}>
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={() => {
+                                setOpenAddUser(false);
+                            }}
+                            aria-label="close"
+                        >
+                            <i className="bi bi-x"></i>
+                        </IconButton>
+                        <Typography
+                            sx={{ ml: 2, flex: 1 }}
+                            variant="h6"
+                            component="div"
+                        >
+                            Ajouter un employé
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+
+                <div className={classes.dialogContent}>
+                    <UserForm onSubmit={addUser} />
+                </div>
+            </Dialog>
         </div>
     );
 }
+
+const useStyles = createUseStyles({
+    container: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+    },
+    header: {
+        textAlign: "center",
+        fontSize: "30px",
+        fontWeight: "bold",
+        marginTop: "20px",
+        marginBottom: "20px",
+        paddingBottom: "20px",
+        borderBottom: "0.5px solid black",
+    },
+    events: {
+        display: "flex",
+        flexDirection: "column",
+        width: "75%",
+        marginTop: "20px",
+        rowGap: "20px",
+    },
+    btnAdd: {
+        width: "100px",
+    },
+    dialogContent: {
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        marginTop: "20px",
+        paddingInline: "5%",
+    },
+});

@@ -64,6 +64,18 @@ export default function useApi() {
         );
     }
 
+    function addUser(user) {
+        return apiClient.post("users", { ...user }, token);
+    }
+
+    function updateUser(id, data) {
+        return apiClient.patch(`users/${id}`, { ...data }, token);
+    }
+
+    function deleteUser(id) {
+        return apiClient.delete(`users/${id}`, token);
+    }
+
     function getSkills() {
         return apiClient.get(`skills`, token);
     }
@@ -89,6 +101,9 @@ export default function useApi() {
         login,
         getLoggedInUser,
         getUsers,
+        addUser,
+        updateUser,
+        deleteUser,
         getSkills,
         getEvents,
         addEvent,
