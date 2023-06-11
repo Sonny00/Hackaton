@@ -51,5 +51,6 @@ const useStayles = createUseStyles({
         flexDirection: "column",
         width: "90%",
         paddingInline: "15px",
+        overflowY: "auto",
     },
 });

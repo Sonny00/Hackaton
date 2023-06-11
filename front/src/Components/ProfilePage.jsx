@@ -223,7 +223,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
                 </div>
-                <hr class="solid"></hr>
+                <hr className="solid"></hr>
             </div>
         );
     };
@@ -284,12 +284,12 @@ export default function ProfilePage() {
                     Ajouter
                 </Button>
             </div>
-            <hr class="solid"></hr>
+            <hr className="solid"></hr>
             {userData && (
                 <div>
-                    {userData?.map((user, index) => {
+                    {userData?.map((user) => {
                         return (
-                            <div key={index}>
+                            <div key={user.id}>
                                 <ProfilePage userData={user} />
                             </div>
                         );
